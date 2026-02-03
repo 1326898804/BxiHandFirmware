@@ -1,0 +1,7 @@
+BasedOnStyle: Microsoft
+AccessModifierOffset: -4
+AlignConsecutiveMacros: true
+AlignTrailingComments: true
+AllowShortFunctionsOnASingleLine: Inline
+BreakBeforeBraces: Allman
+ColumnLimit: 0
