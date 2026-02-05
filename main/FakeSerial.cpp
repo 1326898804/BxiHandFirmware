@@ -1,5 +1,4 @@
 #include "FakeSerial.h"
-#include "CRC.h"
 #include "ble_hand_app.h"
 #include "driver/usb_serial_jtag_select.h"
 #include "esp_log.h"
@@ -16,6 +15,9 @@ extern "C"
 #include "driver/usb_serial_jtag.h"
 #include "freertos/ringbuf.h"
 }
+
+CRC::Table<crcpp_uint8, 8> CRC8_Table(CRC::CRC_8());
+
 QueueHandle_t pack_queue;
 #define RINGBUF_SIZE 1024
 RingbufHandle_t ble_usb_ringbuf; 
@@ -62,7 +64,7 @@ void readUsbTask(void *) {
                 if (curr[0] == 0xA1 && curr[1] == 0xA2 && curr[2] == 0xA3 && curr[3] == 0xA4) {
                     RxSerialPack_u u;
                     memcpy(u.bytes, curr, PACK_SIZE);
-                    uint8_t crc = CRC::Calculate(u.bytes, PACK_SIZE - 1, CRC::CRC_8());
+                    uint8_t crc = CRC::Calculate(u.bytes, PACK_SIZE - 1, CRC8_Table);
                     
                     if (u.pack.CRC == crc) {
                         xQueueSendToBack(pack_queue, &u.pack, 0);
@@ -149,7 +151,7 @@ void FakeSerial::write(uint8_t *data, uint32_t len)
 
     memcpy(u.pack.payload, data, len);
 
-    u.pack.CRC = CRC::Calculate(u.bytes, sizeof(TxSerialPack) - 1, CRC::CRC_8());
+    u.pack.CRC = CRC::Calculate(u.bytes, sizeof(TxSerialPack) - 1, CRC8_Table);
 
     if (!sendHandState(u))
     {

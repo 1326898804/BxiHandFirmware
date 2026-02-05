@@ -159,7 +159,6 @@ void ble_hand_app_gatts_cb(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if,
             ESP_LOGI(BXI_HAND_TAG, "Hand state indication enable");
             enable_hand_state_nf = true;
         } else if ((p_data->write.len == 2) && (p_data->write.value[0] == 0x00) && (p_data->write.value[1] == 0x00)) {
-            esp_ble_gap_start_advertising(&adv_params);
             ESP_LOGI(BXI_HAND_TAG, "Hand state notification/indication disable");
             enable_hand_state_nf = false;
         }
@@ -171,7 +170,6 @@ void ble_hand_app_gatts_cb(esp_gatts_cb_event_t event, esp_gatt_if_t gatts_if,
             ESP_LOGI(BXI_HAND_TAG, "Joint state indication enable");
             enable_joint_state_nf = true;
         } else if ((p_data->write.len == 2) && (p_data->write.value[0] == 0x00) && (p_data->write.value[1] == 0x00)) {
-            esp_ble_gap_start_advertising(&adv_params);
             ESP_LOGI(BXI_HAND_TAG, "Joint state notification/indication disable");
             enable_joint_state_nf = false;
         }

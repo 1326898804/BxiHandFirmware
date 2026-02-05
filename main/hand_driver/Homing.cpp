@@ -171,10 +171,10 @@ static void zero_fingers_parallel_with_current(uint8_t firstIdx, uint8_t count, 
 void zero_all_motors() {
   resetSdToBaseline();
   if (gBusMux) xSemaphoreTake(gBusMux, portMAX_DELAY);
-  zero_with_current(0,  sd[0].servo_direction, 950);   // Thumb Abduction
-  zero_with_current(1,  sd[1].servo_direction, 950);   // Thumb Flex
-  zero_with_current(2,  sd[2].servo_direction, 950);   // Thumb Tendon
-  zero_fingers_parallel_with_current(3, 4, 950);       // Fingers together
+  zero_with_current(0,  sd[0].servo_direction, 960);   // Thumb Abduction
+  zero_with_current(1,  sd[1].servo_direction, 960);   // Thumb Flex
+  zero_with_current(2,  sd[2].servo_direction, 960);   // Thumb Tendon
+  zero_fingers_parallel_with_current(3, 4, 960);       // Fingers together
   // Post-homing settling moves
   hlscl.WritePosEx(SERVO_IDS[0], sd[0].extend_count, 2400, 0, 1023);   // Thumb Abduction to extend
   hlscl.WritePosEx(SERVO_IDS[1], sd[1].extend_count, 2400, 0, 1023);   // Thumb Flexion to extend

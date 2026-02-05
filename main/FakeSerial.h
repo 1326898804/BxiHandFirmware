@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdint.h>
+#include "CRC.h"
 
 typedef struct{
     uint8_t header[4];
@@ -41,6 +42,7 @@ typedef union{
     uint8_t bytes[sizeof(TxSerialPack)];
 }TxSerialPack_u;
 
+extern CRC::Table<crcpp_uint8, 8> CRC8_Table;
 
 void FakeSerialpushDataToBuf(uint8_t *data,uint32_t len);
 
